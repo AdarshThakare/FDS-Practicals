@@ -27,6 +27,10 @@ A = []
 B = []
 C = []
 
+print(__doc__)
+
+print("\n")
+
 print("For Team A -")
 inputTeam(A)
 print("For Team B -")
