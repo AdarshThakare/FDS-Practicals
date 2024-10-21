@@ -1,0 +1,152 @@
+'''a) Write a Python program to store names and mobile numbers of your
+friends in sorted order on names. Search your friend from list using binary search (recursive and
+non-recursive). Insert friend if not present in phonebook
+b) Write a Python program to store names and mobile numbers of your friends in sorted order on
+names. Search your friend from list using Fibonacci search. Insert friend if not present in
+phonebook.'''
+
+print(__doc__)
+
+def accept(A):
+	n = int(input("\nEnter number of people in phonebook : "))
+	for i in range(n):
+		name = input("\nEnter the name(in alphabetical order): ")
+		mobile = int(input("\nEnter the mobile number : "))
+		l = [name,mobile]
+		A.append(l)
+	print("\nData entered successfully.")
+	
+def display(A):
+    print("PHONE RECORDS:\n")
+
+    print("|Sr.No\t|Name\t|Mobile number")
+    for i in range(len(A)):
+        print(f"|{i+1}\t|{A[i][0]}\t|{A[i][1]}")
+
+def BinarySearch(A,key):
+	l=0
+	h=len(A)-1
+	while(l<=h):
+		mid=int((l+h)/2)
+		if(key==A[mid][0]):
+			return mid
+		elif(key<A[mid][0]):
+			h=mid-1
+		else:
+			l=mid+1
+	return -1
+	
+def RBinarySearch(A,l,h,key):
+	if(l<=h):
+		mid=int((l+h)/2)
+		if(key==A[mid][0]):
+			return mid
+		elif(key<A[mid][0]):
+			return RBinarySearch(A,l,mid-1,key)
+		else:
+			return RBinarySearch(A,mid+1,h,key)
+	return -1
+
+def fibonacci(A,key):
+	f2=0
+	f1=1
+	f0=f2+f1
+	n=len(A)
+	
+	while(f0<n):
+		f2=f1
+		f1=f0
+		f0=f2+f1
+	offset=-1
+		
+	while(f0>0):
+		i=min(offset+f2,n-1)
+		if(A[i][0]==key):
+			return i
+		elif(A[i][0]>key):
+			f0=f2
+			f1=f1-f2
+			f2=f0-f1
+		else:
+			f0=f1
+			f1=f2
+			f2=f0-f1
+			offset=i
+	return -1
+
+def insert(A,name):
+	n=len(A)
+	mobile=int(input("\nEnter mobile number : "))
+	L=[name,mobile]
+	A.append(L)
+	j=n-1
+	while(j>=0):
+		if(name>=A[j][0]):
+			break
+		else:
+			A[j+1]=A[j]
+		j=j-1
+	A[j+1]=L
+
+def main():
+	arr=[]
+	while True:
+		print("\n1.Accept data.")
+		print("\n2.Display data.")
+		print("\n3.Search(non-recursively).")
+		print("\n4.Search(recursively).")
+		print("\n5.Fibonacci search.")
+		print("\n6.Exit.")
+	
+		ch = int(input("\nEnter your choice : "))
+	
+		if(ch==1):
+			accept(arr)
+			
+		elif(ch==2):
+			display(arr)
+			
+		elif(ch==3):
+			key=input("\nEnter the name to be search : ")
+			flag=BinarySearch(arr,key)
+			if(flag==-1):
+				print("\nName to be searched not found")
+				insert(arr,key)
+			else:
+				print("\nName found at ",flag)
+				print("\nName : ",arr[flag][0])
+				print("\nMobile : ",arr[flag][1])
+			
+		elif(ch==4):
+			ele=input("\nEnter the name to be search : ")
+			index=RBinarySearch(arr,0,len(arr),ele)
+			if(index==-1):
+				print("\nName to be searched  not found.")
+				insert(arr,ele)
+			else:
+				print("\nName found at ",index)
+				print("\nName : ",arr[index][0])
+				print("\nMobile : ",arr[index][1])
+
+		elif(ch==5):
+			e=input("\nEnter the name to be search : ")
+			index = fibonacci(arr,e)
+			if(index==-1):
+				print("\nName to be searched not found.")
+				insert(arr,e)
+			else:
+				print("\nName found at ",index)
+				print("\nName : ",arr[index][0])
+				print("\nMobile : ",arr[index][1])
+			
+		elif(ch==6):
+			print("\nEnd of program.")
+			break
+		else:
+			print("\nYou entered wrong choice.")
+	
+	
+	
+	
+main()
+	
