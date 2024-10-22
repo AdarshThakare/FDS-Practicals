@@ -143,7 +143,7 @@ int main()
         cout << "6. Exit" << endl;
         cout << endl;
 
-        cout << "Enter your choie:" << flush;
+        cout << "Enter your choice:" << flush;
         cin >> choice;
 
         switch (choice)
